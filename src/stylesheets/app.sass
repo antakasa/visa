@@ -1,2 +1,174 @@
 @import normalize
 @import base/mixins
+
+#frame 
+	max-width: 720px
+	width: 100%
+	display: table 
+	margin: auto 
+
+.pager
+  font: normal normal 18px Georgia, sans
+  color: #666
+
+h2.question
+  font-size: 20px
+  color: #4c4c4c
+  text-transform: none
+  font-weight: normal
+
+/* kysyttÃ¤vÃ¤ sana ja vÃ¤rit
+
+.question-word
+  display: block
+  text-align: center
+  margin: 10px auto
+  font-family: 'Lato', sans-serif
+  font-size: 60px
+  font-weight: bold
+  text-transform: uppercase
+  margin: 10px 0 40px
+
+.end-title
+  display: block
+  text-align: center
+  margin: 10px auto
+  font-family: 'Lato', sans-serif
+  font-size: 60px
+  font-weight: bold
+  text-transform: uppercase
+  margin: 10px 0 40px
+  font-size: 40px
+  margin-bottom: 20px
+  margin-top: 100px
+
+.red
+  color: #c72f2f
+
+.blue
+  color: #2654b1
+
+.yellow
+  color: #efd600
+
+.gray
+  color: #666666
+
+.purple
+  color: #772cbd
+
+.green
+  color: #6dac03
+
+.orange
+  color: #ec9000
+
+.brown
+  color: #583b0d
+
+#choice-block
+  display: block
+  list-style: none
+  margin: 0 auto
+  padding: 0
+  overflow: hidden
+
+.choice-box
+  display: inline-block
+  text-align: center
+  padding: 15px 0
+  cursor: pointer
+  width: 45%
+  margin: 5px
+
+.btn.btn-outlined:hover
+  border-color: #666
+  background: #666
+
+.start-test
+  margin: 40px auto
+
+.timer-bar-container
+  width: 100%
+  max-width: 655px
+  height: 20px
+  margin: 40px auto 70px
+  background: transparent
+  border: solid 1px #999
+  box-sizing: content-box
+
+.timer-bar
+  width: inherit
+  height: 20px
+  background: #999
+
+.result-text
+  font-size: 20px
+  color: #4c4c4c
+  margin-bottom: 40px
+
+.row
+  &#peli
+    margin: 0 auto
+  &#share-article
+    margin-top: 0
+
+#share-article
+  ul
+    margin: 0
+  p
+    margin: 0
+    &.share
+      margin: 20px auto
+
+/*.description  { margin-bottom: 40px; }
+
+@media only screen and (max-width: 767px)
+  .test h3
+    font-size: 24px
+    line-height: 30px
+  .timer-bar-container
+    width: 90%
+
+@media only screen and (max-width: 599px)
+  .test
+    h1
+      font-size: 40px
+    h3
+      font-size: 20px
+      line-height: 26px
+    .row.share-links
+      margin-top: 10px
+      margin-bottom: 0px
+  .fa-stack
+    font-size: 14px !important
+  .pager, h2.question
+    margin: 10px auto
+
+@media only screen and (max-width: 479px)
+  body
+    font-size: 14px
+    line-height: 20px
+  .row
+    margin: 20px auto
+  .test
+    h1
+      font-size: 36px
+    h3
+      font-size: 18px
+      line-height: 22px
+  hr
+    margin: 5px auto 20px
+  .question-word
+    font-size: 36px
+  .pager, h2.question
+    font-size: 18px
+    margin: 10px auto
+  .timer-bar-container
+    margin: 30px auto
+  .end-title
+    font-size: 24px
+  .result-text
+    font-size: 18px
+  p.share
+    margin: 20px auto 10px
