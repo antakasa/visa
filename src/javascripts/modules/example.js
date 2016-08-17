@@ -1,6 +1,12 @@
-export default class Example {
+var $ = require('jquery')
+const jQuery = require('jquery');
+
+global.jQuery = jQuery;
+global.$ = jQuery;
+export default class Visa {
   constructor(el) {
-    this.el = el
-    console.log(el.textContent, '- From the example module')
+  	$( document ).ready(function() {
+ 	console.log("jepa")
+ 	});
   }
 }
