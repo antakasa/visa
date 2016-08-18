@@ -14,11 +14,15 @@ var quizdescription = '<h3>Väripelissä ruutuun ilmesty erivärisiä sanoja. Te
 var quizinstructions = '<p>Vastaamiseen on aikaraja, ja vauhti kiihtyy pelin edetessä. Miten pitkälle sinä pääset?</p>';
 var articlead = '<p>Lue myös: <a href="../mulla-on-peli-kesken"><strong>Mulla on peli kesken - Pelaaminen kehittää kognitiivisia taitoja</strong></a></p>';
 
+
+// Todo: Toisesta pitää päästä eroon 
+let alphabetOrig = 'abcdefghijklmnopqrstuvwxyz'.split('');
 let alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('');
 
 // Shuffle quiz array 
 function shuffle (array) {
-  var currentIndex = array.length, temporaryValue, randomIndex;
+  let currentIndex = array.length, temporaryValue, randomIndex;
+  let array2 = array
 
   // While there remain elements to shuffle...
   while (0 !== currentIndex) {
@@ -27,14 +31,15 @@ function shuffle (array) {
     currentIndex -= 1;
 
     // And swap it with the current element.
-    temporaryValue = array[currentIndex];
-    array[currentIndex] = array[randomIndex];
-    array[randomIndex] = temporaryValue;
+    temporaryValue = array2[currentIndex];
+    array2[currentIndex] = array2[randomIndex];
+    array2[randomIndex] = temporaryValue;
   }
 
-  return array;
+  return array2;
 }
-shuffle(alphabet);
+// TODO: miksi shuffle ylikirjoittaa alphabetin?
+let alphabetShuffled = shuffle(alphabet);
 
 /* quiz settings */
 
@@ -63,6 +68,7 @@ function htmlEncode(value) {
 }
 
 function nextQuestion(choice) {
+   console.log("alphabet=")
     if (!choice) {
         window.clearTimeout(timer);
         endQuiz();
@@ -70,18 +76,22 @@ function nextQuestion(choice) {
     }
     submt = true;
     $('#question').text('Minkä värinen teksti on?');
-    $('#pager').text('vaihe ' + Number(currentquestion + 1));
-    if (quiz[currentquestion].hasOwnProperty('word') && quiz[currentquestion]['word'] != "") {
+    $('#pager').text('vaihe ' + Number(currentquestion));
+    if (alphabetShuffled[currentquestion] != "") {
     if ($('#question-word').length == 0) {
     $('#question-word')
     	.addClass('question-word')
     	.removeClass(quiz[currentquestion-1]['color'])
     	.addClass(quiz[currentquestion]['color'])
     	.attr('id', 'question-word')
-    	.html(quiz[currentquestion]['word'])
+    	.html(alphabetShuffled[currentquestion])
     	.insertAfter('#question');
     } else {
-    $('#question-word').addClass('question-word').removeClass(quiz[currentquestion-1]['color']).addClass(quiz[currentquestion]['color']).attr('id', 'question-word').html(quiz[currentquestion]['word']);
+    $('#question-word')
+	    .addClass('question-word')
+	    .removeClass(quiz[currentquestion-1]['color'])
+	    .addClass(quiz[currentquestion]['color'])
+	    .attr('id', 'question-word').html(alphabetShuffled[currentquestion]);
     }
     } else {
     $('#question-word').remove();
@@ -90,7 +100,13 @@ function nextQuestion(choice) {
     timeLimit = timeLimit - (timeLimit*0.03);
     endAndStartTimer(timeLimit);
 
-    addChoices(quiz[currentquestion]['choices']);
+    let newArray = alphabetShuffled.slice(currentquestion, currentquestion + 4)
+    console.log("Tämä" + newArray)
+    let newArray2 = shuffle(newArray);
+
+    addChoices(newArray2);
+
+    addChoices(alphabetShuffled[currentquestion]);
     setupButtons();
 }
  
@@ -146,12 +162,11 @@ function addChoices(choices) {
 
 
 function processQuestion(choice) {
-	console.log(alphabet[currentquestion] + choice)
-    if (alphabet[currentquestion] != choice) {
+	console.log(nextLetter + choice)
+    if (nextLetter != choice) {
     window.clearTimeout(timer);
      endQuiz();
-    } else if (alphabet[currentquestion] === choice) {
-    	console.log("success")
+    } else if (nextLetter === choice) {
         score++;
         currentquestion++;
         nextQuestion(choice);
@@ -197,6 +212,7 @@ function setupButtons() {
     })
 }
 
+let nextLetter;
 
 function init() {
     $('#start-test').remove();
@@ -212,7 +228,7 @@ function init() {
 
     //add image if present
     if (quiz[0].hasOwnProperty('word') && quiz[0]['word'] != "") {
-        $(document.createElement('span')).addClass('question-word').addClass(alphabet[0]['color']).attr('id', 'question-word').html(alphabet[0]).appendTo('#frame');
+        $(document.createElement('span')).addClass('question-word').addClass(alphabetShuffled[0]['color']).attr('id', 'question-word').html(alphabetShuffled[0]).appendTo('#frame');
     }
 
     //questions holder
@@ -220,10 +236,14 @@ function init() {
 
     //add choices
 
-    let newArray = alphabet.slice(0,4)
+    nextLetter = alphabetOrig[alphabetOrig.indexOf(alphabetShuffled[0]) + 1]
+
+    let newArray = alphabetShuffled.slice(0,3)
+
+    newArray.push(nextLetter)
 
     let newArray2 = shuffle(newArray);
-
+    
     addChoices(newArray2);
 
     endAndStartTimer();
